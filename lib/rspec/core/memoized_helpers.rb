@@ -121,8 +121,9 @@ module RSpec
 
           # Apply the memoization. The method has been defined in an ancestor
           # module so we can use `super` here to get the value.
-          define_method(name) do
-            __memoized.fetch(name) { |k| __memoized[k] = super() }
+          define_method(name) do |*args|
+            key = some_kind_of_hash_of_name_and_args(name, args)
+            __memoized.fetch(key) { |k| __memoized[key] = super() }
           end
         end
 
